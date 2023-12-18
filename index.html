@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #quiz-container {
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .question {
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options li {
+            margin-bottom: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        <div class="question" id="question"></div>
+        <ul class="options" id="options"></ul>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "ما هو عمر لوفي بعد السنتين?",
+                options: ["21", "18", "20", "19"],
+                correctAnswer: "19"
+            },
+            {
+                question: "ما هو اكبر شخص سنآ في طاقم لوفي?",
+                options: ["زورو", "فرانكي", "روبين", "بروك"],
+                correctAnswer: "بروك"
+            },
+            {
+                question: "ما هو عمر شانكس عندما ضحي ب يده عندما انقذ لوفي?",
+                options: ["23", "22", "20", "19"],
+                correctAnswer: "19"
+            },
+            {
+                question: "ما هو الشخص الذي اعطي كايدو فاكه الدراجون?",
+                options: ["بيج مام", "وجدها ب نفسه", "روكس", "شيكي"],
+                correctAnswer: "بيج مام"
+            },
+            {
+                question: "ما هو اول شخص تحالف معه لوفي خارج الطاقم?",
+                options: ["لاو", "كيد", "بارتولومو", "شانكس"],
+                correctAnswer: "لاو"
+            },
+            {
+                question: "اول هاكي تعلمه لوفي?",
+                options: ["تصلب", "تغليف ملكي", "ملكي", "تنبوء"],
+                correctAnswer: "ملكي"
+            },
+            {
+                question: "اول ظهور للهاكي كان ب اي حلقه?",
+                options: ["1", "348", "39", "30"],
+                correctAnswer: "1"
+            },
+            {
+                question: "ما هو اول شخص خان لوفي في الطاقم?",
+                options: ["نامي", "تشوبر", "سانجي", "اوسوب"],
+                correctAnswer: "نامي"
+            },
+          {
+              question:  "ما هو اول شخص قالته لوفي و هو يمتلك هاكي (العدو) ?",
+              options: ["كروكودايل", "باجي", "اينيل", "دون كريك"],
+              correctAnswer: "اينيل"
+          },
+          {
+              question:"ااسم الشخص الي كان هيقتل لوفي و هوا صغير بس شانكس انقزه",
+              options: ["بردولت", "هيجوما", "106", "ساتوري"],
+              correctAnswer: "هيجوما"
+          },
+          {
+              question: "في اي حلقة مات فيها ايس",
+              options: ["484", "442", "482", "462"],
+              correctAnswer: "482"
+          },
+          {
+              question: "ام لوفي؟",
+              options: ["اوم", "شانكس", "بورتجاس دي ايس", "بيج موم"],
+              correctAnswer: "كروكدايل"
+          },
+          {
+              question: "ما هي اسم الجزيره التي تدرب عليها لوفي خلال السنتين ",
+              options: ["سكايبا","روسكاينا ", "جزيره النساء", "انيس لوبي"],
+              correctAnswer: "روسكاينا"
+          },
+          {
+              question: "عمك؟",
+              options: ["شانكس", "خالد", "ون بيس", "زورو"],
+              correctAnswer: "ون بيس"
+          },
+          {
+              question: "The best hentai ever?",
+              options: ["overflow", "tsundero", "night tail", "one piece"],
+              correctAnswer: "overflow"
+          }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const questionElement = document.getElementById("question");
+            const optionsElement = document.getElementById("options");
+
+            questionElement.textContent = quizData[currentQuestion].question;
+
+            optionsElement.innerHTML = "";
+            quizData[currentQuestion].options.forEach((option, index) => {
+                const li = document.createElement("li");
+                li.textContent = option;
+                li.onclick = () => selectAnswer(option);
+                optionsElement.appendChild(li);
+            });
+        }
+
+        function selectAnswer(selectedOption) {
+            const correctAnswer = quizData[currentQuestion].correctAnswer;
+            const resultElement = document.getElementById("result");
+
+            if (selectedOption === correctAnswer) {
+                score++;
+                resultElement.textContent = "Correct!";
+            } else {
+                resultElement.textContent = "Incorrect. The correct answer is: " + correctAnswer;
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        function showFinalResult() {
+            const quizContainer = document.getElementById("quiz-container");
+            quizContainer.innerHTML = `<h2>Quiz Completed!</h2>
+                                       <p>Your score: ${score} out of ${quizData.length}</p>`;
+        }
+
+        function checkAnswer() {
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = "Please select an answer.";
+        }
+
+        // Initial load
+        loadQuestion();
+    </script>
+
+</body>
+</html>
